@@ -1,7 +1,7 @@
 // Şantiye Defteri çevrimdışı önbelleği.
 // Sayfa: önce internetten (yeni sürüm gelsin), yoksa önbellekten. Kod ve yazı tipleri: önbellekten.
 // Supabase istekleri önbelleğe karışmaz.
-const CACHE = 'santiye-defteri-PK34IEMC';
+const CACHE = 'santiye-defteri-URKR2RTL';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
