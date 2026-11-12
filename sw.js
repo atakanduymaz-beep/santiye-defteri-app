@@ -1,11 +1,11 @@
 // Şantiye Defteri çevrimdışı önbelleği.
 // Sayfa: önce internetten (yeni sürüm gelsin), yoksa önbellekten. Kod ve yazı tipleri: önbellekten.
 // Supabase istekleri önbelleğe karışmaz.
-const CACHE = 'santiye-defteri-WW6TSZBV';
+const CACHE = 'santiye-defteri-TWI4CBGQ';
 // Yayın derlemesi bu listeyi o sürümün bütün dosyalarıyla doldurur. Yeni sürüm kurulurken hepsi
 // önceden indirilir; eski önbellek ancak yenisi tamamlanınca silinir. (Önceden yalnız sayfa iskeleti
 // kaydediliyordu; güncellemeden sonra kod dosyaları önbellekte olmadığı için internetsiz açılmıyordu.)
-const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-J2SMSTJO.js","./chunk-KYXYIWGW.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-FV53VLB3.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-U2NH44W5.css","./main-WW6TSZBV.js","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-A4F4B4OB.js"];
+const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-J2SMSTJO.js","./chunk-KYXYIWGW.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-FV53VLB3.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-TWI4CBGQ.js","./main-ULY3BZIL.css","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-A4F4B4OB.js"];
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
@@ -29,6 +29,9 @@ self.addEventListener('fetch', (e) => {
   const same = url.origin === self.location.origin;
   const font = /^fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (!same && !font) return;
+  // Kök uygulama, deneme kanalının (/beta/) isteklerine karışmaz; onun kendi önbelleği var.
+  const scope = new URL(self.registration.scope).pathname;
+  if (same && !scope.endsWith('/beta/') && url.pathname.startsWith(scope + 'beta/')) return;
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req).then((r) => {
       const copy = r.clone();
