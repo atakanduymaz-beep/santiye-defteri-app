@@ -1,11 +1,11 @@
 // Şantiye Defteri çevrimdışı önbelleği.
 // Sayfa: önce internetten (yeni sürüm gelsin), yoksa önbellekten. Kod ve yazı tipleri: önbellekten.
 // Supabase istekleri önbelleğe karışmaz.
-const CACHE = 'santiye-defteri-657EJUMH';
+const CACHE = 'santiye-defteri-TBT6WWW7';
 // Yayın derlemesi bu listeyi o sürümün bütün dosyalarıyla doldurur. Yeni sürüm kurulurken hepsi
 // önceden indirilir; eski önbellek ancak yenisi tamamlanınca silinir. (Önceden yalnız sayfa iskeleti
 // kaydediliyordu; güncellemeden sonra kod dosyaları önbellekte olmadığı için internetsiz açılmıyordu.)
-const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-J2SMSTJO.js","./chunk-KYXYIWGW.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-FV53VLB3.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-657EJUMH.js","./main-SX7FT3UI.css","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-A4F4B4OB.js"];
+const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-FGPNFC7N.js","./chunk-KYXYIWGW.js","./chunk-QBHTPHS2.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-MJUTWTBA.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-IAPP5UDB.css","./main-TBT6WWW7.js","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-G5KD3WT5.js"];
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
@@ -44,4 +44,22 @@ self.addEventListener('fetch', (e) => {
     if (r.ok || r.type === 'opaque') { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
     return r;
   })));
+});
+
+// Bildirim (Web Push): sunucudan gelen başlık/metni gösterir; dokununca uygulamayı açar.
+self.addEventListener('push', (e) => {
+  let m = {};
+  try { m = e.data ? e.data.json() : {}; } catch { m = { title: 'Şantiye Defteri', body: e.data ? e.data.text() : '' }; }
+  e.waitUntil(self.registration.showNotification(m.title || 'Şantiye Defteri', {
+    body: m.body || '', tag: m.tag, icon: './icon-192.png', badge: './icon-192.png', data: { url: m.url || './' },
+  }));
+});
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = new URL((e.notification.data && e.notification.data.url) || './', self.registration.scope).href;
+  e.waitUntil((async () => {
+    const all = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const c of all) if (c.url.startsWith(self.registration.scope)) { await c.focus(); try { await c.navigate(url); } catch { /* yok say */ } return; }
+    await self.clients.openWindow(url);
+  })());
 });
