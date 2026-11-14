@@ -1,11 +1,11 @@
 // Şantiye Defteri çevrimdışı önbelleği.
 // Sayfa: önce internetten (yeni sürüm gelsin), yoksa önbellekten. Kod ve yazı tipleri: önbellekten.
 // Supabase istekleri önbelleğe karışmaz.
-const CACHE = 'santiye-defteri-WADHOO23';
+const CACHE = 'santiye-defteri-JL2GF3ZN';
 // Yayın derlemesi bu listeyi o sürümün bütün dosyalarıyla doldurur. Yeni sürüm kurulurken hepsi
 // önceden indirilir; eski önbellek ancak yenisi tamamlanınca silinir. (Önceden yalnız sayfa iskeleti
 // kaydediliyordu; güncellemeden sonra kod dosyaları önbellekte olmadığı için internetsiz açılmıyordu.)
-const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-CBES5LXI.js","./chunk-KYXYIWGW.js","./chunk-QBHTPHS2.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-NLD53TIR.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-IX46Q7LV.css","./main-WADHOO23.js","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-H427P7TB.js"];
+const FILES = ["./","./a4-T24GLQT3.js","./apple-touch-icon.png","./chunk-CBES5LXI.js","./chunk-KYXYIWGW.js","./chunk-QBHTPHS2.js","./chunk-X4HY7A4J.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-NLD53TIR.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./main-GEKMBB3K.css","./main-JL2GF3ZN.js","./manifest.webmanifest","./pdf-GIGTALR4.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-H427P7TB.js"];
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
