@@ -1,13 +1,13 @@
 {
-  "name": "Şantiye Defteri",
-  "short_name": "Şantiye",
+  "name": "EA Şantiye Defteri",
+  "short_name": "EA Şantiye",
   "description": "Şantiye şefleri için saha takip uygulaması",
   "lang": "tr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#eef0f1",
+  "background_color": "#000000",
   "theme_color": "#1d2327",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
