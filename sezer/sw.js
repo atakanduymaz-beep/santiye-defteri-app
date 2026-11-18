@@ -5,7 +5,7 @@ const CACHE = 'santiye-defteri-v2';
 // Yayın derlemesi bu listeyi o sürümün bütün dosyalarıyla doldurur. Yeni sürüm kurulurken hepsi
 // önceden indirilir; eski önbellek ancak yenisi tamamlanınca silinir. (Önceden yalnız sayfa iskeleti
 // kaydediliyordu; güncellemeden sonra kod dosyaları önbellekte olmadığı için internetsiz açılmıyordu.)
-const FILES = ["./","./a4-VGMF5SOM.js","./apple-touch-icon.png","./chunk-44CEPJHM.js","./chunk-5HIHFCGL.js","./chunk-Z4WFITXS.js","./chunk-Z66S64YH.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-SJAW4VPY.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./logo.png","./main-ISTEAT3T.css","./main-RLJJRES6.js","./manifest.webmanifest","./pdf-M2NLYF6N.js","./pdf.worker-6.2.108.min.mjs","./reportPdf-KIPIPMCS.js"];
+const FILES = ["./","./a4-VGMF5SOM.js","./apple-touch-icon.png","./chunk-3A27E4FX.js","./chunk-5HIHFCGL.js","./chunk-LXTJVKWO.js","./chunk-PRVUAXLB.js","./chunk-Z4WFITXS.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-YMEK2C7J.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./logo.png","./main-IEZU2O5M.js","./main-VOIWIZ4Y.css","./manifest.webmanifest","./pdf-M2NLYF6N.js","./pdf.worker-6.2.108.min.mjs","./push-5JHD4QO2.js","./reportPdf-FL4CAE4U.js"];
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
@@ -56,10 +56,15 @@ self.addEventListener('push', (e) => {
 });
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
+  // Göreli adres ('./#/…', './?is=…') servis çalışanının kapsamına göre mutlak yapılır (alt klasördeki kanallar da çalışır).
   const url = new URL((e.notification.data && e.notification.data.url) || './', self.registration.scope).href;
   e.waitUntil((async () => {
     const all = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    for (const c of all) if (c.url.startsWith(self.registration.scope)) { await c.focus(); try { await c.navigate(url); } catch { /* yok say */ } return; }
-    await self.clients.openWindow(url);
+    const c = all.find((x) => x.url.startsWith(self.registration.scope));
+    if (!c) { await self.clients.openWindow(url); return; }
+    try { await c.focus(); } catch { /* yok say */ }
+    // Açık uygulamaya haber ver (sayfayı yenilemeden gider); ayrıca adres farklıysa doğrudan yönlendir.
+    try { c.postMessage({ type: 'nav', url }); } catch { /* yok say */ }
+    if (c.url !== url && typeof c.navigate === 'function') { try { await c.navigate(url); } catch { /* mesaj yeterli */ } }
   })());
 });
