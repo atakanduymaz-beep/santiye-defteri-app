@@ -5,7 +5,7 @@ const CACHE = 'santiye-defteri-v2';
 // Yayın derlemesi bu listeyi o sürümün bütün dosyalarıyla doldurur. Yeni sürüm kurulurken hepsi
 // önceden indirilir; eski önbellek ancak yenisi tamamlanınca silinir. (Önceden yalnız sayfa iskeleti
 // kaydediliyordu; güncellemeden sonra kod dosyaları önbellekte olmadığı için internetsiz açılmıyordu.)
-const FILES = ["./","./a4-NO5GZBIE.js","./apple-touch-icon.png","./chunk-5P7IIIGQ.js","./chunk-DCT2UMCD.js","./chunk-NPHWT2XV.js","./chunk-VHYRE63S.js","./chunk-WCIIC3BJ.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-AKDM5F4F.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./logo.png","./main-GXDW2U5T.css","./main-PJJMCCT2.js","./manifest.webmanifest","./pdf-F2EJJWDZ.js","./pdf.worker-6.2.108.min.mjs","./push-B4WTYXQC.js","./reportPdf-H3AIBKW2.js"];
+const FILES = ["./","./a4-NO5GZBIE.js","./apple-touch-icon.png","./chunk-2LQTLPQY.js","./chunk-NPHWT2XV.js","./chunk-RJO3LI4T.js","./chunk-VHYRE63S.js","./chunk-WCIIC3BJ.js","./icon-192.png","./icon-512.png","./icon-maskable.png","./idb-AKDM5F4F.js","./inter-400.woff","./inter-500.woff","./inter-600.woff","./inter-700.woff","./inter-800.woff","./inter-900.woff","./logo.png","./main-GXDW2U5T.css","./main-IJB63EN5.js","./manifest.webmanifest","./pdf-F2EJJWDZ.js","./pdf.worker-6.2.108.min.mjs","./push-DOES2CW2.js","./reportPdf-ARKPQMSS.js"];
 
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
